@@ -1,0 +1,51 @@
+﻿<ContentPage 
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:testApp="clr-namespace:TestApp;assembly=TestApp"
+  x:Class="TestApp.MainPage"
+  x:Name="ThePage"
+  x:DataType="testApp:MainPageViewModel"
+  Shell.NavBarIsVisible="False">
+
+  <StackLayout Orientation="Vertical" Padding="0,80,0,0" Spacing="10">
+      <Label Text="Crash repro of CollectionView." FontSize="Body" Padding="20,0" />
+
+      <CollectionView x:Name="Collection"
+                      VerticalOptions="FillAndExpand" ItemSizingStrategy="MeasureAllItems" ItemsLayout="VerticalList" 
+                      IsGrouped="True" ItemsSource="{Binding Items}"
+                      BackgroundColor="Beige"
+                      >
+
+          <CollectionView.GroupHeaderTemplate>
+              <DataTemplate x:DataType="testApp:GroupViewModel">
+                <Frame BackgroundColor="LightBlue" Padding="20" CornerRadius="20" HasShadow="False">
+                  <Label>
+                    <Label.FormattedText>
+                      <FormattedString>
+                        <Span Text="Hello #"/>
+                        <Span Text="{Binding GroupId}"/>
+                        <Span Text=", items:"/>
+                        <Span Text="{Binding Count}"/>
+                      </FormattedString>
+                    </Label.FormattedText>
+                  </Label>
+                </Frame>
+              </DataTemplate>
+          </CollectionView.GroupHeaderTemplate>
+
+          <CollectionView.ItemTemplate>
+              <DataTemplate x:DataType="testApp:ItemViewModel">
+                  <StackLayout Spacing="0">
+                      <StackLayout Orientation="Horizontal" Padding="10">
+                          <Label Text="Item #" />
+                          <Label Text="{Binding ItemId}" />
+                      </StackLayout>
+                      <Line HeightRequest="1" BackgroundColor="LightGray" Margin="0,10,0,0" />
+                  </StackLayout>
+              </DataTemplate>
+          </CollectionView.ItemTemplate>
+
+      </CollectionView>
+  </StackLayout>
+
+</ContentPage>
