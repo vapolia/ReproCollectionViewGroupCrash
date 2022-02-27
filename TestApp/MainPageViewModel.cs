@@ -23,26 +23,28 @@ namespace TestApp
             //Wait for the UI to be up.
             Task.Delay(1000).ContinueWith(_ =>
             {
-				MainThread.BeginInvokeOnMainThread(() =>
+				MainThread.BeginInvokeOnMainThread(async () =>
 				{
 		            try
 		            {
                         //Remove the 1st group, then add 2 groups
                         //=> triggers a consistency exception in UICollectionView
                         Items.RemoveAt(0);
+                        await Task.Delay(1);
 			            Items.Add(new(100, GenerateItems()));
+                        await Task.Delay(1);
 			            Items.Add(new(200, GenerateItems()));
+                        await Task.Delay(1);
 		            }
 		            catch (Exception e)
 		            {
 			            UserInteraction.Alert($"Crash: {e.Message}");
 		            }
 				});
-
             });
         }
 
-        List<ItemViewModel> GenerateItems(int minItems = 0, int maxItems = 5)
+        List<ItemViewModel> GenerateItems(int minItems = 1, int maxItems = 5)
         {
 	        var r = new Random();
 	        var n = r.Next(minItems, maxItems+1);

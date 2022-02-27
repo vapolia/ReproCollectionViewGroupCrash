@@ -6,6 +6,8 @@ namespace TestApp
 {
     public partial class App : Application
     {
+        public bool IsLightTheme { get; set; }
+        
         public App()
         {
             InitializeComponent();
